@@ -1,0 +1,78 @@
+---
+title: "Swapping Legacy sUSD on Optimism"
+description: "How I dealt with old Synthetix sUSD tokens stuck on Optimism after the protocol migration. Practical steps and lessons learned."
+date: 2026-02-22
+author: "Turtleand"
+tags: ["synthetix", "optimism", "defi", "token-migration"]
+---
+
+I had some old sUSD tokens sitting in my wallet on Optimism. They'd been there for a while, doing nothing. Today I finally dealt with them, and it turned into a small adventure worth documenting.
+
+## What's sUSD?
+
+sUSD is a synthetic dollar created by Synthetix. It's collateralized by SNX tokens at a 3:1 ratio, meaning for every sUSD in circulation, there's $3 worth of SNX backing it. It's one of the OG DeFi stablecoins, and for a long time it worked well enough.
+
+The specific token I had was on Optimism: contract `0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9`. This matters because Synthetix deployed on multiple chains, and each version has its own token contracts.
+
+## The Migration Problem
+
+Synthetix is deprecating ALL synths on Optimism. They're consolidating everything back to Ethereum mainnet as part of a larger protocol overhaul. If you're holding any synths on Optimism, you need to do something about them.
+
+Here's the timeline:
+
+- **Jan 31, 2026:** Official swap deadline passed
+- **Feb 1 to Apr 30:** Treasury redemption window at a frozen oracle price, but only for wallets that held before Feb 1
+- **After Apr 30:** Increasing discount applied, getting worse over time
+- **Dec 31, 2026:** Final deadline. After this, good luck.
+
+I missed the Jan 31 deadline. I didn't hold before Feb 1 in the right way to qualify for the treasury redemption. So I needed to find another way out.
+
+## Trying to Bridge
+
+My first instinct was to bridge the sUSD back to Ethereum mainnet. Makes sense, right? Move it to the chain where Synthetix is consolidating.
+
+Didn't work. This is a legacy token on Optimism, and the standard bridges don't support it. You can't just move old synth tokens across chains like you would ETH or USDC.
+
+## Swapping on Velodrome
+
+So I went to Velodrome, which is the main DEX on Optimism. Found an sUSD liquidity pool and swapped.
+
+Here's the catch: sUSD is depegged. It's been trading somewhere between $0.70 and $0.91 depending on the day and the pool. So I took a hit on the swap. Not the full dollar value I expected from a "stablecoin."
+
+The process itself was straightforward:
+
+1. Connected wallet to Velodrome on Optimism
+2. Selected sUSD as the input token
+3. Swapped to USDC (or whatever stable you prefer)
+4. Accepted the slippage from the depeg
+
+Done. Tokens out of limbo and into something usable. Not at full value, but at least liquid.
+
+## Other Options I Considered
+
+Before going the Velodrome route, I looked at a few alternatives:
+
+**DEX aggregators (1inch, Paraswap):** These can sometimes find better rates by routing through multiple pools. Worth checking if you're swapping a larger amount. The aggregators might split your trade across pools to reduce slippage.
+
+**Wait for the re-peg:** Synthetix has a target of Q2 2026 to restore the sUSD peg through their new system. If you're patient and believe it'll happen, holding could get you closer to $1 per sUSD. That's a bet on the protocol executing on time though.
+
+**Synthetix treasury redemption:** If you held before Feb 1 and qualify, this is probably the best route. The redemption happens at a frozen oracle price, which should be close to $1. Check the Synthetix governance docs for eligibility details.
+
+**Just hold and ignore it:** Honestly, this is what I'd been doing for months. It's a valid strategy if the amount is small. But the deprecation timeline means the value will keep degrading after April, so there's a cost to inaction.
+
+## The Lesson
+
+The real takeaway here isn't about sUSD specifically. It's about protocol migrations in general.
+
+DeFi protocols evolve. They deprecate old systems, migrate to new chains, change token contracts. If you're holding tokens and not paying attention to governance proposals and migration announcements, you can end up with assets that are harder to move or worth less than you think.
+
+A few things I'll do differently:
+
+- **Check governance channels periodically.** Even for protocols where I'm just holding tokens, not actively participating.
+- **Don't let tokens sit indefinitely.** If you're not using them, either put them to work or convert them to something you actively manage.
+- **Set calendar reminders for known deadlines.** The Jan 31 deadline was announced months in advance. I just wasn't paying attention.
+- **Understand the chain you're on.** Legacy tokens on L2s can be especially tricky because bridging isn't always available for deprecated contracts.
+
+It's not a disaster. I lost some value on the depeg, but the tokens aren't gone. The bigger risk was doing nothing until December when the discount gets really ugly.
+
+If you've got old synths on Optimism, now's the time to figure out your plan. Don't be like me and wait until the deadline's already passed.

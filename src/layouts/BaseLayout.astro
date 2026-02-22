@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+const { title = 'Chain Lab', description = 'Blockchain exploration lab by Turtleand' } = Astro.props;
+const themeScript = `
+  (() => {
+    const k = 'chain-lab-theme', r = document.documentElement, m = matchMedia('(prefers-color-scheme:dark)');
+    const g = () => { try { return localStorage.getItem(k) } catch { return null } };
+    const a = t => { r.dataset.theme = t; try { localStorage.setItem(k, t) } catch {} };
+    a(g() || (m.matches ? 'dark' : 'light'));
+    document.addEventListener('DOMContentLoaded', () => {
+      const b = document.querySelector('[data-theme-toggle]');
+      if (b) b.addEventListener('click', () => a(r.dataset.theme === 'dark' ? 'light' : 'dark'));
+    });
+  })();
+`;
+---
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <script is:inline set:html={themeScript} />
+  </head>
+  <body>
+    <header>
+      <div class="shell">
+        <a class="brand" href="/">Chain Lab</a>
+        <div style="display:flex;align-items:center;gap:0.5rem">
+          <nav><a href="/">Articles</a> <a href="https://turtleand.com">Portal</a></nav>
+          <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle theme">☀</button>
+        </div>
+      </div>
+    </header>
+    <main><div class="shell"><slot /></div></main>
+    <footer><div class="shell">© {new Date().getFullYear()} Turtleand. All rights reserved.</div></footer>
+  </body>
+</html>
