@@ -35,18 +35,27 @@ Didn't work. This is a legacy token on Optimism, and the standard bridges don't 
 
 ## Swapping on Velodrome
 
-So I went to Velodrome, which is the main DEX on Optimism. Found an sUSD liquidity pool and swapped.
+So I went to Velodrome, which is the main DEX on Optimism. Found an sUSD liquidity pool and tried to swap to USDT.
 
-Here's the catch: sUSD is depegged. It's been trading somewhere between $0.70 and $0.91 depending on the day and the pool. So I took a hit on the swap. Not the full dollar value I expected from a "stablecoin."
+Here's the catch: sUSD is depegged. It's been trading somewhere between $0.70 and $0.91 depending on the day and the pool. So I was already taking a hit. Not the full dollar value I expected from a "stablecoin."
 
-The process itself was straightforward:
+But the first attempt failed.
 
-1. Connected wallet to Velodrome on Optimism
-2. Selected sUSD as the input token
-3. Swapped to USDC (or whatever stable you prefer)
-4. Accepted the slippage from the depeg
+![Swap failed on Velodrome](/images/swap-failed.jpg)
 
-Done. Tokens out of limbo and into something usable. Not at full value, but at least liquid.
+The transaction just wouldn't go through. I kept getting "Transaction failed, please try again." Frustrating when you're already dealing with a token you just want out of.
+
+### The Smart Account Fix
+
+What finally got it working was enabling Velodrome's "smart account" feature. This upgrades your regular wallet interaction to use account abstraction under the hood: faster transactions, lower fees, and the ability to pay gas with any token you already hold.
+
+![Smart account prompt](/images/smart-account.jpg)
+
+Once I enabled the smart account, the swap went through on the next try. If you're having trouble with legacy token swaps on Velodrome, this is worth trying.
+
+![Successful swap on Velodrome](/images/velodrome-swap.jpg)
+
+The exchange rate wasn't great (the depeg means you're getting roughly $0.85 per sUSD instead of $1), but the tokens are finally out of limbo and into something usable.
 
 ## Other Options I Considered
 
