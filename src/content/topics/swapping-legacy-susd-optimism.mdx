@@ -1,6 +1,6 @@
 ---
 title: "Swapping Legacy sUSD on Optimism"
-description: "How I dealt with old Synthetix sUSD tokens stuck on Optimism after the protocol migration. Practical steps and lessons learned."
+description: "How I dealt with old Synthetix sUSD tokens stuck on Optimism. The failed swaps, the smart account fix, and what I learned."
 date: 2026-02-22
 author: "Turtleand"
 tags: ["synthetix", "optimism", "defi", "token-migration"]
@@ -12,76 +12,43 @@ I had some old sUSD tokens sitting in my wallet on Optimism. They'd been there f
 
 sUSD is a synthetic dollar created by Synthetix. It's collateralized by SNX tokens at a 3:1 ratio, meaning for every sUSD in circulation, there's $3 worth of SNX backing it. It's one of the OG DeFi stablecoins, and for a long time it worked well enough.
 
-The specific token I had was on Optimism: contract `0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9`. This matters because Synthetix deployed on multiple chains, and each version has its own token contracts.
+The specific token I had was on Optimism: contract `0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9`.
 
-## The Migration Problem
+## Trying Uniswap First
 
-Synthetix is deprecating ALL synths on Optimism. They're consolidating everything back to Ethereum mainnet as part of a larger protocol overhaul. If you're holding any synths on Optimism, you need to do something about them.
-
-Here's the timeline:
-
-- **Jan 31, 2026:** Official swap deadline passed
-- **Feb 1 to Apr 30:** Treasury redemption window at a frozen oracle price, but only for wallets that held before Feb 1
-- **After Apr 30:** Increasing discount applied, getting worse over time
-- **Dec 31, 2026:** Final deadline. After this, good luck.
-
-I missed the Jan 31 deadline. I didn't hold before Feb 1 in the right way to qualify for the treasury redemption. So I needed to find another way out.
-
-## Trying to Bridge
-
-My first instinct was to bridge the sUSD back to Ethereum mainnet. Makes sense, right? Move it to the chain where Synthetix is consolidating.
-
-Didn't work. This is a legacy token on Optimism, and the standard bridges don't support it. You can't just move old synth tokens across chains like you would ETH or USDC.
+My first attempt was Uniswap. But when I searched for sUSD there, I found a different contract: `0x57ab1ec28d129707052df4df418d58a2d46d5f51`. That's the same one listed on [CoinGecko](https://www.coingecko.com/en/coins/synthetix-susd). My tokens weren't detected. Different contract, different token version. Dead end.
 
 ## Swapping on Velodrome
 
-So I went to Velodrome, which is the main DEX on Optimism. Found an sUSD liquidity pool and tried to swap to USDT.
+So I went to [Velodrome](https://velodrome.finance/), which is the main DEX on Optimism. Found the sUSD pool and tried to swap to USDT.
 
-Here's the catch: sUSD is depegged. It's been trading somewhere between $0.70 and $0.91 depending on the day and the pool. So I was already taking a hit. Not the full dollar value I expected from a "stablecoin."
-
-But the first attempt failed.
+It kept failing. Transaction after transaction, automatically rejected. I had no idea why.
 
 ![Swap failed on Velodrome](/images/swap-failed.jpg)
 
-The transaction just wouldn't go through. I kept getting "Transaction failed, please try again." Frustrating when you're already dealing with a token you just want out of.
+Turns out the issue was related to Velodrome's "smart account" feature. The swap kept getting rejected after I declined the smart account prompt. I didn't connect the two at first.
 
-### The Smart Account Fix
+## The Smart Account Fix
 
-What finally got it working was enabling Velodrome's "smart account" feature. This upgrades your regular wallet interaction to use account abstraction under the hood: faster transactions, lower fees, and the ability to pay gas with any token you already hold.
+Velodrome offers a "smart account" upgrade that uses account abstraction: faster transactions, lower fees, and the ability to pay gas with any token you hold.
 
 ![Smart account prompt](/images/smart-account.jpg)
 
-Once I enabled the smart account, the swap went through on the next try. If you're having trouble with legacy token swaps on Velodrome, this is worth trying.
+What finally worked: I moved the sUSD to a different wallet, enabled the smart account there, and the swap went through.
 
-![Successful swap on Velodrome](/images/velodrome-swap.jpg)
+![Successful swap](/images/swap-success.jpg)
 
-The exchange rate wasn't great (the depeg means you're getting roughly $0.85 per sUSD instead of $1), but the tokens are finally out of limbo and into something usable.
-
-## Other Options I Considered
-
-Before going the Velodrome route, I looked at a few alternatives:
-
-**DEX aggregators (1inch, Paraswap):** These can sometimes find better rates by routing through multiple pools. Worth checking if you're swapping a larger amount. The aggregators might split your trade across pools to reduce slippage.
-
-**Wait for the re-peg:** Synthetix has a target of Q2 2026 to restore the sUSD peg through their new system. If you're patient and believe it'll happen, holding could get you closer to $1 per sUSD. That's a bet on the protocol executing on time though.
-
-**Synthetix treasury redemption:** If you held before Feb 1 and qualify, this is probably the best route. The redemption happens at a frozen oracle price, which should be close to $1. Check the Synthetix governance docs for eligibility details.
-
-**Just hold and ignore it:** Honestly, this is what I'd been doing for months. It's a valid strategy if the amount is small. But the deprecation timeline means the value will keep degrading after April, so there's a cost to inaction.
+The exchange rate wasn't great (sUSD is depegged, so you're getting roughly $0.85 per sUSD instead of $1), but the tokens are finally out of limbo and into something usable.
 
 ## The Lesson
 
-The real takeaway here isn't about sUSD specifically. It's about protocol migrations in general.
+The real takeaway here isn't about sUSD specifically. It's about DeFi protocols in general.
 
-DeFi protocols evolve. They deprecate old systems, migrate to new chains, change token contracts. If you're holding tokens and not paying attention to governance proposals and migration announcements, you can end up with assets that are harder to move or worth less than you think.
+Protocols evolve. They deprecate old systems, migrate to new chains, change token contracts. If you're holding tokens and not paying attention, you can end up with assets that are harder to move or worth less than you think.
 
 A few things I'll do differently:
 
 - **Check governance channels periodically.** Even for protocols where I'm just holding tokens, not actively participating.
 - **Don't let tokens sit indefinitely.** If you're not using them, either put them to work or convert them to something you actively manage.
-- **Set calendar reminders for known deadlines.** The Jan 31 deadline was announced months in advance. I just wasn't paying attention.
-- **Understand the chain you're on.** Legacy tokens on L2s can be especially tricky because bridging isn't always available for deprecated contracts.
-
-It's not a disaster. I lost some value on the depeg, but the tokens aren't gone. The bigger risk was doing nothing until December when the discount gets really ugly.
-
-If you've got old synths on Optimism, now's the time to figure out your plan. Don't be like me and wait until the deadline's already passed.
+- **Understand the chain you're on.** Legacy tokens on L2s can be especially tricky because not every DEX recognizes the same contract.
+- **Try different DEXes.** When one doesn't work (Uniswap couldn't find my token), another might (Velodrome did).
