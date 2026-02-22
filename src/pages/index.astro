@@ -7,22 +7,19 @@ const sorted = topics.sort((a, b) => b.data.date.getTime() - a.data.date.getTime
 ---
 
 <BaseLayout title="Chain Lab" description="Blockchain exploration lab. Hands-on notes from the chain.">
-  <section class="card">
+  <div class="index-header">
     <h1>Chain Lab</h1>
     <p>Hands-on blockchain exploration. Builder notes, not trading advice.</p>
-  </section>
+  </div>
 
-  <section class="card">
-    <h2>Articles</h2>
-    <ul class="article-list">
-      {sorted.map((topic) => (
-        <li>
-          <a href={`/topics/${topic.slug}/`}>
-            <strong>{topic.data.title}</strong>
-            <div class="article-date">{topic.data.date.toISOString().slice(0, 10)}</div>
-          </a>
-        </li>
-      ))}
-    </ul>
-  </section>
+  <ul class="article-list">
+    {sorted.map((topic) => (
+      <li>
+        <a href={`/topics/${topic.slug}/`}>
+          <strong>{topic.data.title}</strong>
+          <div class="article-date">{topic.data.date.toISOString().slice(0, 10)}</div>
+        </a>
+      </li>
+    ))}
+  </ul>
 </BaseLayout>

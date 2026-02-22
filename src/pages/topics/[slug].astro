@@ -27,17 +27,15 @@ const { Content } = await topic.render();
     "isAccessibleForFree": true,
     "url": `https://chain.turtleand.com/topics/${topic.slug}`
   })} />
-  <section class="card">
-    <div style="margin-bottom:0.75rem">
+  <div class="article-header">
+    <div class="article-meta">
       <a class="pill" href="/">← Back</a>
-      <span class="article-date" style="margin-left:0.5rem">{topic.data.date.toISOString().slice(0, 10)}</span>
+      <span class="article-date">{topic.data.date.toISOString().slice(0, 10)}</span>
     </div>
     <h1>{topic.data.title}</h1>
     <p>{topic.data.description}</p>
-  </section>
-  <section class="card">
-    <article class="content-article">
-      <Content />
-    </article>
-  </section>
+  </div>
+  <article class="content-article">
+    <Content />
+  </article>
 </BaseLayout>
