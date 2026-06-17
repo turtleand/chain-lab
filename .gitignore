@@ -1,1 +1,13 @@
 BACKLOG.md
+
+# Dependencies
+node_modules/
+
+# Astro build artifacts
+.astro/
+dist/
+
+# Environment files
+.env
+.env.*
+!.env.example

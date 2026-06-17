@@ -2,6 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
+const getTopicSlug = (topic) => topic.slug ?? topic.id.replace(/\.(md|mdx)$/, '').replace(/\/index$/, '');
+
 const topics = await getCollection('topics');
 const sorted = topics.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
@@ -15,7 +17,7 @@ const sorted = topics.sort((a, b) => b.data.date.getTime() - a.data.date.getTime
   <ul class="article-list">
     {sorted.map((topic) => (
       <li>
-        <a href={`/topics/${topic.slug}/`}>
+        <a href={`/topics/${getTopicSlug(topic)}/`}>
           <strong>{topic.data.title}</strong>
           <div class="article-date">{topic.data.date.toISOString().slice(0, 10)}</div>
         </a>
