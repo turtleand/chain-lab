@@ -230,14 +230,20 @@ p { margin: 0 0 1em; color: var(--muted); }
   line-height: 1.58;
 }
 
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1.6rem;
+.hero-note {
+  display: inline-flex;
+  width: fit-content;
+  margin: 0.45rem 0 0;
+  padding: 0.55rem 0.78rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--accent-strong);
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.25;
 }
 
-.hero-actions span,
 .tag-row em,
 .block-number,
 .back-link,
@@ -256,7 +262,6 @@ p { margin: 0 0 1em; color: var(--muted); }
   line-height: 1;
 }
 
-.hero-actions span,
 .tag-row em { padding: 0.45rem 0.72rem; }
 
 .ledger-card {
@@ -302,6 +307,14 @@ p { margin: 0 0 1em; color: var(--muted); }
   color: var(--code);
   font-family: "SFMono-Regular", Consolas, monospace;
   font-size: 0.75rem;
+}
+
+.ledger-card__intro {
+  margin: 0;
+  padding: 1rem 1.15rem 0.15rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
 }
 
 .trust-stack {

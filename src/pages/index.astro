@@ -9,31 +9,31 @@ const topics = await getCollection('topics');
 const sorted = topics.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
-<BaseLayout title="Chain Lab" description="Blockchain exploration lab for practical Turtleand notes on trust, settlement, wallets, DeFi, and cryptographic systems.">
+<BaseLayout title="Chain Lab" description="Blockchain systems literacy by Turtleand: settlement, custody, wallets, DeFi, identity, proofs, governance, and human agency.">
   <section class="home-hero" aria-labelledby="page-title">
     <div class="hero-copy">
       <p class="eyebrow">Turtleand blockchain surface</p>
-      <h1 id="page-title">Blockchain as a trust laboratory.</h1>
+      <h1 id="page-title">Blockchain systems for human agency.</h1>
       <p class="hero-deck">
-        Chain Lab studies blockchains without the casino fog: settlement, custody, wallets, DeFi, identity,
-        proofs, and the places where trust should be bundled or split apart.
+        Chain Lab studies the durable parts of blockchains: settlement, custody, wallets, DeFi,
+        identity, proofs, governance, and the trade-offs that decide what people can verify, own,
+        and coordinate.
       </p>
-      <div class="hero-actions" aria-label="Chain Lab focus areas">
-        <span>Articles first</span>
-        <span>Builder notes</span>
-        <span>No trading advice</span>
-      </div>
+      <p class="hero-note">The focus is systems literacy, not speculation.</p>
     </div>
-    <div class="ledger-card" aria-label="Chain Lab topic model">
+    <div class="ledger-card" aria-label="Chain Lab reading frame">
       <div class="ledger-card__header">
-        <span>Trust stack</span>
-        <code>0x turtleand</code>
+        <span>Reading frame</span>
+        <code>0xTurtleand</code>
       </div>
+      <p class="ledger-card__intro">
+        Each article asks where trust moves, who gains agency, and what risks stay with the user.
+      </p>
       <ol class="trust-stack">
-        <li><span>01</span><strong>Settlement</strong><small>Who gets finality?</small></li>
-        <li><span>02</span><strong>Custody</strong><small>Who holds the keys?</small></li>
+        <li><span>01</span><strong>Settlement</strong><small>What becomes final?</small></li>
+        <li><span>02</span><strong>Custody</strong><small>Who controls the keys?</small></li>
         <li><span>03</span><strong>Proof</strong><small>What can be verified?</small></li>
-        <li><span>04</span><strong>Agency</strong><small>What can humans control?</small></li>
+        <li><span>04</span><strong>Agency</strong><small>What remains human-directed?</small></li>
       </ol>
     </div>
   </section>
@@ -41,7 +41,7 @@ const sorted = topics.sort((a, b) => b.data.date.getTime() - a.data.date.getTime
   <section class="article-section" aria-labelledby="articles-title">
     <div class="section-kicker">
       <p class="eyebrow">Current articles</p>
-      <h2 id="articles-title">Field notes from the chain.</h2>
+      <h2 id="articles-title">Latest blockchain notes.</h2>
     </div>
 
     <ul class="article-list">
