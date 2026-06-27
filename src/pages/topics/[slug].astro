@@ -3,6 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
 const topicSlugFromEntry = (topic) => topic.slug ?? topic.id.replace(/\.(md|mdx)$/, '').replace(/\/index$/, '');
+const formatDate = (date) => date.toISOString().slice(0, 10);
 
 export const prerender = true;
 
@@ -25,20 +26,27 @@ const { Content } = await render(topic);
     "@type": "TechArticle",
     "headline": topic.data.title,
     "description": topic.data.description,
-    "datePublished": topic.data.date.toISOString().slice(0, 10),
+    "datePublished": formatDate(topic.data.date),
     "author": { "@type": "Person", "name": "Turtleand", "url": "https://turtleand.com" },
     "isAccessibleForFree": true,
     "url": `https://chain.turtleand.com/topics/${topicSlug}`
   })} />
-  <div class="article-header">
-    <div class="article-meta">
-      <a class="pill" href="/">← Back</a>
-      <span class="article-date">{topic.data.date.toISOString().slice(0, 10)}</span>
+  <article class="article-shell">
+    <header class="article-header">
+      <div class="article-meta">
+        <a class="back-link" href="/">← Articles</a>
+        <time datetime={formatDate(topic.data.date)}>{formatDate(topic.data.date)}</time>
+      </div>
+      <p class="eyebrow">Chain Lab field note</p>
+      <h1>{topic.data.title}</h1>
+      <p>{topic.data.description}</p>
+      <div class="tag-row" aria-label="Topic tags">
+        {topic.data.tags.map((tag) => <em>{tag}</em>)}
+      </div>
+    </header>
+
+    <div class="content-article">
+      <Content />
     </div>
-    <h1>{topic.data.title}</h1>
-    <p>{topic.data.description}</p>
-  </div>
-  <article class="content-article">
-    <Content />
   </article>
 </BaseLayout>
