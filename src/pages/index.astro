@@ -3,25 +3,63 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
 const getTopicSlug = (topic) => topic.slug ?? topic.id.replace(/\.(md|mdx)$/, '').replace(/\/index$/, '');
+const formatDate = (date) => date.toISOString().slice(0, 10);
 
 const topics = await getCollection('topics');
 const sorted = topics.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
-<BaseLayout title="Chain Lab" description="Blockchain exploration lab. Hands-on notes from the chain.">
-  <div class="index-header">
-    <h1>Chain Lab</h1>
-    <p>Hands-on blockchain exploration. Builder notes, not trading advice.</p>
-  </div>
+<BaseLayout title="Chain Lab" description="Blockchain exploration lab for practical Turtleand notes on trust, settlement, wallets, DeFi, and cryptographic systems.">
+  <section class="home-hero" aria-labelledby="page-title">
+    <div class="hero-copy">
+      <p class="eyebrow">Turtleand blockchain surface</p>
+      <h1 id="page-title">Blockchain as a trust laboratory.</h1>
+      <p class="hero-deck">
+        Chain Lab studies blockchains without the casino fog: settlement, custody, wallets, DeFi, identity,
+        proofs, and the places where trust should be bundled or split apart.
+      </p>
+      <div class="hero-actions" aria-label="Chain Lab focus areas">
+        <span>Articles first</span>
+        <span>Builder notes</span>
+        <span>No trading advice</span>
+      </div>
+    </div>
+    <div class="ledger-card" aria-label="Chain Lab topic model">
+      <div class="ledger-card__header">
+        <span>Trust stack</span>
+        <code>0x turtleand</code>
+      </div>
+      <ol class="trust-stack">
+        <li><span>01</span><strong>Settlement</strong><small>Who gets finality?</small></li>
+        <li><span>02</span><strong>Custody</strong><small>Who holds the keys?</small></li>
+        <li><span>03</span><strong>Proof</strong><small>What can be verified?</small></li>
+        <li><span>04</span><strong>Agency</strong><small>What can humans control?</small></li>
+      </ol>
+    </div>
+  </section>
 
-  <ul class="article-list">
-    {sorted.map((topic) => (
-      <li>
-        <a href={`/topics/${getTopicSlug(topic)}/`}>
-          <strong>{topic.data.title}</strong>
-          <div class="article-date">{topic.data.date.toISOString().slice(0, 10)}</div>
-        </a>
-      </li>
-    ))}
-  </ul>
+  <section class="article-section" aria-labelledby="articles-title">
+    <div class="section-kicker">
+      <p class="eyebrow">Current articles</p>
+      <h2 id="articles-title">Field notes from the chain.</h2>
+    </div>
+
+    <ul class="article-list">
+      {sorted.map((topic, index) => (
+        <li class="article-item">
+          <a class="article-card" href={`/topics/${getTopicSlug(topic)}/`}>
+            <span class="block-number">Block {String(sorted.length - index).padStart(2, '0')}</span>
+            <span class="article-card__body">
+              <strong>{topic.data.title}</strong>
+              <span>{topic.data.description}</span>
+              <span class="tag-row" aria-label="Topic tags">
+                {topic.data.tags.slice(0, 4).map((tag) => <em>{tag}</em>)}
+              </span>
+            </span>
+            <time datetime={formatDate(topic.data.date)}>{formatDate(topic.data.date)}</time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
 </BaseLayout>
