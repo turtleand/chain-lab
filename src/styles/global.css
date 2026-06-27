@@ -129,6 +129,24 @@ p { margin: 0 0 1em; color: var(--muted); }
   margin: 1.5rem auto;
 }
 .content-article strong { color: var(--ink); }
+.content-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+.content-article th,
+.content-article td {
+  border: 1px solid var(--border);
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+.content-article th {
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.content-article td { color: var(--muted); }
 
 /* Pills / tags */
 .pill {
