@@ -3,18 +3,6 @@ import '../styles/global.css';
 
 const { title = 'Chain Lab', description = 'Blockchain exploration lab by Turtleand' } = Astro.props;
 const pageTitle = title === 'Chain Lab' ? title : `${title} | Chain Lab`;
-const themeScript = `
-  (() => {
-    const k = 'chain-lab-theme', r = document.documentElement, m = matchMedia('(prefers-color-scheme: dark)');
-    const g = () => { try { return localStorage.getItem(k) } catch { return null } };
-    const a = t => { r.dataset.theme = t; try { localStorage.setItem(k, t) } catch {} };
-    a(g() || (m.matches ? 'dark' : 'light'));
-    document.addEventListener('DOMContentLoaded', () => {
-      const b = document.querySelector('[data-theme-toggle]');
-      if (b) b.addEventListener('click', () => a(r.dataset.theme === 'dark' ? 'light' : 'dark'));
-    });
-  })();
-`;
 ---
 <!doctype html>
 <html lang="en" data-theme="light">
@@ -24,7 +12,7 @@ const themeScript = `
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="alternate" type="application/rss+xml" title="Turtleand Chain Lab RSS" href="/rss.xml" />
-    <script is:inline set:html={themeScript} />
+    <script src="/scripts/theme.js" is:inline></script>
   </head>
   <body>
     <header class="site-header">
@@ -35,7 +23,7 @@ const themeScript = `
         </a>
         <div class="header-actions">
           <nav aria-label="Primary navigation">
-            <a href="/">Articles</a>
+            <a href="/#blog">Blog</a>
             <a href="https://turtleand.com">Turtleand</a>
           </nav>
           <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle theme">
