@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const getTopicSlug = (topic) => topic.slug ?? topic.id.replace(/\.(md|mdx)$/, '').replace(/\/index$/, '');
+const formatDate = (date) => date.toISOString().slice(0, 10);
+
+const topics = await getCollection('topics');
+const sorted = topics.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout title="Blog" description="Current Chain Lab notes from the Decentralized Systems Lab learning path.">
+  <section class="article-section blog-page" aria-labelledby="articles-title">
+    <div class="section-kicker">
+      <h1 id="articles-title">Blog</h1>
+      <p class="section-intro">Current notes from the learning path.</p>
+    </div>
+
+    <ul class="article-list">
+      {sorted.map((topic, index) => (
+        <li class="article-item">
+          <a class="article-card" href={`/topics/${getTopicSlug(topic)}/`}>
+            <span class="block-number">Block {String(sorted.length - index).padStart(2, '0')}</span>
+            <span class="article-card__body">
+              <strong>{topic.data.title}</strong>
+              <span>{topic.data.description}</span>
+              <span class="tag-row" aria-label="Topic tags">
+                {topic.data.tags.slice(0, 4).map((tag) => <em>{tag}</em>)}
+              </span>
+            </span>
+            <time datetime={formatDate(topic.data.date)}>{formatDate(topic.data.date)}</time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
