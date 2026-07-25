@@ -478,15 +478,13 @@ p { margin: 0 0 1em; color: var(--muted); }
   line-height: 1.6;
 }
 
-.artifact-list,
-.ecosystem-row > div {
+.artifact-list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.48rem;
 }
 
-.artifact-list span,
-.ecosystem-row a {
+.artifact-list span {
   display: inline-flex;
   align-items: center;
   width: fit-content;
@@ -498,11 +496,6 @@ p { margin: 0 0 1em; color: var(--muted); }
   font-size: 0.82rem;
   font-weight: 780;
   line-height: 1;
-}
-
-.ecosystem-row a:hover {
-  background: var(--panel-raised);
-  text-decoration: none;
 }
 
 .lesson-queue {
@@ -566,24 +559,6 @@ p { margin: 0 0 1em; color: var(--muted); }
   color: var(--soft);
   font-size: 0.82rem;
   line-height: 1.45;
-}
-
-.ecosystem-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-
-.ecosystem-row > span {
-  color: var(--soft);
-  font-size: 0.78rem;
-  font-weight: 850;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 
 .tag-row em,
@@ -1002,11 +977,6 @@ footer {
 
   .stage-panel__grid {
     grid-template-columns: 1fr;
-  }
-
-  .ecosystem-row {
-    align-items: flex-start;
-    flex-direction: column;
   }
 
   .article-card {
