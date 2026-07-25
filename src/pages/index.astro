@@ -107,14 +107,6 @@ const stages = [
   },
 ];
 
-const ecosystemLinks = [
-  ['AI Lab', 'https://lab.turtleand.com'],
-  ['Build', 'https://build.turtleand.com'],
-  ['Hermes', 'https://hermes.turtleand.com'],
-  ['AI Atlas', 'https://ai-atlas.turtleand.com'],
-  ['Growth', 'https://growth.turtleand.com'],
-  ['Handbook', 'https://handbook.turtleand.com'],
-];
 ---
 
 <BaseLayout
@@ -240,13 +232,6 @@ const ecosystemLinks = [
           )}
         </article>
       ))}
-    </div>
-
-    <div class="ecosystem-row" aria-label="Connected Turtleand surfaces">
-      <span>Connected surfaces</span>
-      <div>
-        {ecosystemLinks.map(([label, href]) => <a href={href}>{label}</a>)}
-      </div>
     </div>
   </section>
 
