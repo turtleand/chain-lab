@@ -1,0 +1,22 @@
+# Turtleand Decentralized Systems Lab
+
+> Blockchain systems literacy covering protocols, incentives, custody, security, wallets, contracts, governance, and trade-offs.
+
+Canonical: https://decentralized.turtleand.com/
+
+## Main routes
+
+- [Learning path](https://decentralized.turtleand.com/): A progressive path from blockchain foundations to decentralized systems and AI agents.
+- [Articles](https://decentralized.turtleand.com/blog/): Current field notes from the learning path.
+- [RSS feed](https://decentralized.turtleand.com/rss.xml): New article updates.
+- [Full AI-readable index](https://decentralized.turtleand.com/llms-full.txt): Route and article summaries.
+
+## Articles
+
+- [Distribution Without One Central Algorithm](https://decentralized.turtleand.com/topics/distribution-without-one-central-algorithm/): How Mastodon distributes content through federation instead of one global ranking system.
+- [Bitcoin Is Heavy Because It Bundles Trust](https://decentralized.turtleand.com/topics/bitcoin-blockchain-trust-unbundling/): Why blockchains bundle trust problems and how newer systems unbundle them.
+- [Swapping Legacy sUSD on Optimism](https://decentralized.turtleand.com/topics/swapping-legacy-susd-optimism/): A practical account of a legacy token migration and its wallet trade-offs.
+
+## About
+
+Curated by [Turtleand](https://turtleand.com/). Technology-first systems literacy, not speculation or financial advice.

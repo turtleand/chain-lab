@@ -2,7 +2,7 @@
 
 Blockchain learning lab by [Turtleand](https://turtleand.com). Practical, experience-driven content about blockchain technology, DeFi, and the AI x crypto convergence.
 
-**Live at:** [chain.turtleand.com](https://chain.turtleand.com) *(coming soon)*
+**Live at:** [decentralized.turtleand.com](https://decentralized.turtleand.com)
 
 ## What This Is
 

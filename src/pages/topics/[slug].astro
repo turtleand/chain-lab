@@ -2,7 +2,6 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 
-const topicSlugFromEntry = (topic) => topic.slug ?? topic.id.replace(/\.(md|mdx)$/, '').replace(/\/index$/, '');
 const formatDate = (date) => date.toISOString().slice(0, 10);
 
 export const prerender = true;
@@ -16,11 +15,11 @@ export async function getStaticPaths() {
 }
 
 const { topic } = Astro.props;
-const topicSlug = topicSlugFromEntry(topic);
 const { Content } = await render(topic);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
-<BaseLayout title={topic.data.title} description={topic.data.description}>
+<BaseLayout title={topic.data.title} description={topic.data.description} ogType="article">
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
     "@type": "TechArticle",
@@ -29,7 +28,8 @@ const { Content } = await render(topic);
     "datePublished": formatDate(topic.data.date),
     "author": { "@type": "Person", "name": "Turtleand", "url": "https://turtleand.com" },
     "isAccessibleForFree": true,
-    "url": `https://chain.turtleand.com/topics/${topicSlug}`
+    "mainEntityOfPage": canonicalURL,
+    "url": canonicalURL
   })} />
   <article class="article-shell">
     <header class="article-header">

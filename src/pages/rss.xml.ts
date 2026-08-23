@@ -1,7 +1,7 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
 
-const SITE = 'https://chain.turtleand.com';
+const SITE = 'https://decentralized.turtleand.com';
 const feedUrl = new URL('/rss.xml', SITE).href;
 
 export async function GET() {
