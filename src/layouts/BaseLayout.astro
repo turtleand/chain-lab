@@ -13,18 +13,6 @@ const pageTitle = title === 'Decentralized Systems Lab'
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImageURL = new URL(image, Astro.site);
 const rssURL = new URL('/rss.xml', Astro.site);
-const themeScript = `
-  (() => {
-    const k = 'chain-lab-theme', r = document.documentElement, m = matchMedia('(prefers-color-scheme: dark)');
-    const g = () => { try { return localStorage.getItem(k) } catch { return null } };
-    const a = t => { r.dataset.theme = t; try { localStorage.setItem(k, t) } catch {} };
-    a(g() || (m.matches ? 'dark' : 'light'));
-    document.addEventListener('DOMContentLoaded', () => {
-      const b = document.querySelector('[data-theme-toggle]');
-      if (b) b.addEventListener('click', () => a(r.dataset.theme === 'dark' ? 'light' : 'dark'));
-    });
-  })();
-`;
 ---
 <!doctype html>
 <html lang="en" data-theme="light">
@@ -48,7 +36,7 @@ const themeScript = `
     <meta name="twitter:image" content={socialImageURL} />
     <meta name="twitter:image:alt" content="Turtleand Decentralized Systems Lab" />
     <link rel="alternate" type="application/rss+xml" title="Turtleand Decentralized Systems Lab RSS" href={rssURL} />
-    <script is:inline set:html={themeScript} />
+    <script src="/scripts/theme.js" is:inline></script>
   </head>
   <body>
     <header class="site-header">
