@@ -1,246 +1,269 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
 
-const getTopicSlug = (topic) => topic.slug ?? topic.id.replace(/\.(md|mdx)$/, '').replace(/\/index$/, '');
-const formatDate = (date) => date.toISOString().slice(0, 10);
-
-const topics = await getCollection('topics');
-const sorted = topics.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-
-const roadmap = [
+const stages = [
   {
+    id: 'understand',
     number: '01',
     title: 'Understand',
     purpose: 'Map the blockchain machine before choosing tools or chains.',
-    detail:
-      'Build a mental model of replicated state, verifiable transitions, and where trust stops and humans start.',
-    modules: [
+    summary:
+      'Build a mental model of replicated state, verifiable transitions, and where trust moves inside the system.',
+    activities: [
       'Technical layers, state models, and trust assumptions',
       'How nodes maintain shared state under failure and delay',
-      'Design language for verifiable security and accountability',
+      'Language for verifiable security and human agency',
     ],
-    artifacts: ['state transition notes', 'trust checklist', 'glossary entries'],
+    artifacts: ['state machine essay', 'modular stack map', 'technical glossary'],
+    lessons: [
+      {
+        title: 'Cryptography, proofs and state',
+        topics: ['Hashes', 'Digital signatures', 'Merkle trees', 'Commitments', 'Zero-knowledge proofs', 'State machines', 'State roots'],
+        purpose:
+          'Understand how blockchains prove identity, integrity, ownership, and state without relying on a central database.',
+      },
+      {
+        title: 'Protocol network',
+        topics: ['Nodes', 'Peer-to-peer gossip', 'Mempools', 'Block propagation', 'Light clients'],
+        purpose: 'Understand how participants communicate and spread transactions and blocks across the network.',
+      },
+      {
+        title: 'Consensus and shared security',
+        topics: ['Proof of Work', 'Proof of Stake', 'BFT-style consensus', 'Validators', 'Finality', 'Slashing', 'Restaking'],
+        purpose:
+          'Understand how distributed systems agree on what comes next and what security assumptions protect agreement.',
+      },
+      {
+        title: 'Execution environments',
+        topics: ['EVM', 'Parallel EVM', 'Solana/SVM-style execution', 'Move', 'WASM runtimes'],
+        purpose: 'Understand where blockchain programs run and how ecosystems process transactions differently.',
+      },
+      {
+        title: 'Accounts, contracts and assets',
+        topics: ['EOAs', 'Wallets', 'Smart accounts', 'Smart contracts', 'Token standards', 'Storage', 'Permissions', 'Upgradeability'],
+        purpose: 'Understand ownership, programmable rules, assets, and smart contract behavior.',
+      },
+      {
+        title: 'Scaling and modularity',
+        topics: ['Rollups', 'Sequencers', 'Settlement', 'Data availability', 'Blobs', 'Fraud proofs', 'Validity proofs'],
+        purpose: 'Understand how blockchains increase capacity by splitting responsibilities across specialized layers.',
+      },
+      {
+        title: 'Interoperability and chain abstraction',
+        topics: ['Bridges', 'IBC-style messaging', 'Cross-chain communication', 'Intents', 'Solvers', 'Paymasters', 'User/agent abstraction'],
+        purpose: 'Understand how separate chains communicate and where complexity can be hidden from users or agents.',
+      },
+      {
+        title: 'Access and offchain infrastructure',
+        topics: ['RPCs', 'Indexers', 'Explorers', 'APIs', 'Decentralized storage', 'Decentralized compute', 'Monitoring'],
+        purpose: 'Understand how humans, applications, and agents read from and interact with blockchains.',
+      },
+    ],
   },
   {
+    id: 'compare',
     number: '02',
     title: 'Compare',
-    purpose: 'Compare architectures so the trade-offs become legible.',
-    detail:
-      'Use representative designs to separate consensus models, data publication, and execution patterns before adopting any stack.',
-    modules: [
+    purpose: 'Study representative architectures so the trade-offs become legible.',
+    summary:
+      'Use a small comparison set to separate settlement, data publication, execution, tooling, and failure modes.',
+    activities: [
       'Ethereum with rollups',
       'Solana',
       'Celestia',
-      'Bitcoin as a minimal reference model',
+      'Bitcoin as a reference appendix',
     ],
-    artifacts: ['architecture diagrams', 'capability maps', 'failure-mode comparisons'],
+    artifacts: ['architecture diagrams', 'comparison tables', 'failure-mode notes'],
   },
   {
+    id: 'build',
     number: '03',
     title: 'Build',
-    purpose: 'Turn models into evidence through local-first experiments.',
-    detail:
-      'Keep early work in educational environments: local chains, readable scripts, and state observations before any production exposure.',
-    modules: [
-      'Local chain bring-up',
-      'Transaction flow and signature flow',
-      'Contract deployment and event reading',
-      'RPC and query experiments',
+    purpose: 'Move from theory into controlled local-first experiments.',
+    summary:
+      'Start with local devnets and readable scripts before repeating simple flows on testnets.',
+    activities: [
+      'Run a local Ethereum devnet',
+      'Send a local transaction',
+      'Deploy a minimal contract',
+      'Query state through RPC',
     ],
-    artifacts: ['build notes', 'diagrams of state flow', 'testnet transition logs'],
+    artifacts: ['local build notes', 'state transition diagrams', 'testnet-only logs'],
   },
   {
+    id: 'agents',
     number: '04',
     title: 'Introduce Agents',
-    purpose: 'Connect AI assistants to verifiable state with explicit human control.',
-    detail:
-      'Start with read-only access, then require explicit human approval before any signing or broadcast.',
-    modules: [
-      'Read-only state query agent',
-      'Proposed transaction formatting',
-      'Human review and approval flow',
-      'Future smart account and abstraction experiments',
+    purpose: 'Connect AI agents to verifiable state with explicit human control.',
+    summary:
+      'Begin read-only, then prepare possible actions, then require human approval before anything is signed or broadcast.',
+    activities: [
+      'Read-only state query tool',
+      'Transaction proposal formatting',
+      'Human review and approval',
+      'Later smart account experiments',
     ],
-    artifacts: ['agent architecture notes', 'approval workflow draft', 'testnet-only agent scripts'],
+    artifacts: ['agent architecture notes', 'approval workflow draft', 'testnet-only experiments'],
   },
 ];
 
-const stageOneModules = [
-  {
-    title: 'Cryptography, proofs and state',
-    topics: ['Hashes', 'Digital signatures', 'Merkle trees', 'Commitments', 'Zero-knowledge proofs', 'State machines', 'State roots'],
-    purpose:
-      'Understand how systems prove identity, integrity, ownership, and state transition without relying on a central database.',
-  },
-  {
-    title: 'Protocol network',
-    topics: ['Nodes', 'Peer-to-peer gossip', 'Mempools', 'Block propagation', 'Light clients'],
-    purpose: 'Understand how participants coordinate and spread transactions and blocks across the network.',
-  },
-  {
-    title: 'Consensus and shared security',
-    topics: ['Proof of Work', 'Proof of Stake', 'BFT style consensus', 'Validators', 'Finality', 'Slashing', 'Restaking'],
-    purpose:
-      'Understand how distributed systems agree on order and why those assumptions protect the shared state.',
-  },
-  {
-    title: 'Execution environments',
-    topics: ['EVM', 'Parallel EVM', 'SVM style execution', 'Move', 'WASM runtimes'],
-    purpose: 'Understand where programs execute and how execution strategies affect throughput and complexity.',
-  },
-  {
-    title: 'Accounts, contracts and assets',
-    topics: ['EOAs', 'Wallets', 'Smart accounts', 'Smart contracts', 'Token standards', 'Storage', 'Permissions', 'Upgradeability'],
-    purpose:
-      'Understand ownership models, programmable rules, assets, and contract lifecycle behavior.',
-  },
-  {
-    title: 'Scaling and modularity',
-    topics: ['Rollups', 'Sequencers', 'Settlement', 'Data availability', 'Blobs', 'Fraud proofs', 'Validity proofs'],
-    purpose: 'Understand why modern systems split responsibilities across specialized layers.',
-  },
-  {
-    title: 'Interoperability and chain abstraction',
-    topics: ['Bridges', 'IBC style messaging', 'Cross-chain communication', 'Intents', 'Solvers', 'Paymasters', 'User abstraction'],
-    purpose: 'Understand how separate chains communicate and where complexity is hidden from users or agents.',
-  },
-  {
-    title: 'Access and offchain infrastructure',
-    topics: ['RPCs', 'Indexers', 'Explorers', 'APIs', 'Decentralized storage', 'Decentralized compute', 'Monitoring'],
-    purpose: 'Understand how humans and software read, verify, and act on blockchain state.',
-  },
-];
-
-const outputs = [
-  'Essays and field notes',
-  'Diagrams and architecture maps',
-  'Glossary of foundational blockchain terms',
-  'Comparison tables and artifact logs',
-  'Local build notes',
-  'Agent interaction experiments on testnet only',
-];
-
-const ecosystemLinks = [
-  ['AI Lab', 'https://lab.turtleand.com'],
-  ['Build', 'https://build.turtleand.com'],
-  ['Hermes', 'https://hermes.turtleand.com'],
-  ['AI Atlas', 'https://ai-atlas.turtleand.com'],
-  ['Growth', 'https://growth.turtleand.com'],
-  ['Handbook', 'https://handbook.turtleand.com'],
-];
 ---
 
 <BaseLayout
   title="Decentralized Systems Lab"
-  description="Decentralized Systems Lab is Turtleand’s progressive path for blockchain systems literacy from first principles."
+  description="Decentralized Systems Lab is Turtleand's progressive path for understanding blockchain technology from first principles."
 >
   <section class="home-hero" aria-labelledby="page-title">
     <div class="hero-copy">
       <p class="eyebrow">Turtleand blockchain systems surface</p>
       <h1 id="page-title">Decentralized Systems Lab.</h1>
       <p class="hero-deck">
-        Build a progressive map of blockchain systems from first principles. The path starts with replicated
-        state, then moves through architecture comparisons, local-first experiments, and careful human-approved
-        agent interaction.
+        Turtleand's progressive path for understanding blockchain technology from first principles:
+        first by mapping the technical layers, then by comparing major architectures, then by building
+        small experiments, and finally by connecting decentralized systems with AI agents.
       </p>
-      <p class="hero-note">Focus is systems literacy, not speculation.</p>
-      <p class="hero-note">Decentralized systems as a durable learning path.</p>
+      <p class="hero-note">Technology-first systems literacy, not speculation.</p>
+      <p class="learning-note">
+        This is learning in public. Turtleand starts from high-level blockchain familiarity, an introductory
+        Solidity course, and ecosystem reading, then builds a progressive path in the spirit of AI Lab.
+      </p>
     </div>
     <div class="compass-card" aria-label="Learning compass">
-      <h2 class="eyebrow">Learning Compass</h2>
-      <p class="compass-intro">A clear route for how this lab is progressing.</p>
-      <div class="compass-stages">
-        {roadmap.map((item) => (
-          <article class="compass-stage">
-            <p class="compass-stage__number">{item.number}</p>
-            <h3>{item.title}</h3>
-            <p class="compass-stage__purpose">{item.purpose}</p>
-            <p>{item.detail}</p>
-            <ul class="compass-stage__list">
-              {item.modules.map((module) => <li>{module}</li>)}
-            </ul>
-            <div class="compass-stage__artifacts">
-              {item.artifacts.map((artifact) => <em>{artifact}</em>)}
-            </div>
-          </article>
-        ))}
+      <div class="ledger-card__header">
+        <span>Learning Compass</span>
+        <code>0xPath</code>
       </div>
+      <p class="ledger-card__intro">
+        Four stages keep the site oriented: foundations first, comparison second, experiments third,
+        agent interaction last.
+      </p>
+      <ol class="compass-stack">
+        {stages.map((item) => (
+          <li>
+            <span>{item.number}</span>
+            <strong>{item.title}</strong>
+            <small>{item.purpose}</small>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
-  <section class="roadmap-section" aria-labelledby="roadmap-title">
+  <section class="compass-section" id="compass" aria-labelledby="compass-title">
     <div class="section-kicker">
-      <h2 id="roadmap-title" class="eyebrow">Learning roadmap</h2>
+      <h2 id="compass-title" class="eyebrow">Stage Workspace</h2>
       <p class="section-intro">
-        The roadmap is explicit by design: understand layers first, compare architectures second, build in local
-        environments third, and connect AI agents only with human approval.
+        Select one stage at a time. The compass stays visible, while each subspace holds only the work needed for that part of the path.
       </p>
     </div>
 
-    <div class="stage-one-section">
-      <h3 id="stage-one-title">Stage 1: Map the blockchain machine</h3>
-      <p>
-        Stage 1 is the foundation layer. It establishes a shared vocabulary around what blockchains are doing
-        when they appear to just be moving numbers across a graph.
-      </p>
-      <div class="module-grid">
-        {stageOneModules.map((module) => (
-          <article class="module-card">
-            <h4>{module.title}</h4>
-            <p>{module.purpose}</p>
-            <ul>
-              {module.topics.map((topic) => <li>{topic}</li>)}
-            </ul>
-          </article>
-        ))}
-      </div>
-    </div>
-
-    <div class="artifact-section" aria-labelledby="outputs-title">
-      <h3 id="outputs-title">Expected outputs</h3>
-      <p>
-        The lab produces explicit learning artifacts in every stage so progress is visible and reusable.
-      </p>
-      <div class="artifact-list">
-        {outputs.map((item) => (
-          <p><em>{item}</em></p>
-        ))}
-      </div>
-    </div>
-
-    <div class="ecosystem-links" aria-label="Related Turtleand surfaces">
-      <h3>Connected ecosystem surface</h3>
-      <div>
-        {ecosystemLinks.map(([label, href]) => (
-          <a class="compass-link" href={href}>{label}</a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="article-section" id="blog" aria-labelledby="articles-title">
-    <div class="section-kicker">
-      <h2 id="articles-title" class="eyebrow">Blog</h2>
-      <p class="section-intro">Current notes from the learning path.</p>
-    </div>
-
-    <ul class="article-list">
-      {sorted.map((topic, index) => (
-        <li class="article-item">
-          <a class="article-card" href={`/topics/${getTopicSlug(topic)}/`}>
-            <span class="block-number">Block {String(sorted.length - index).padStart(2, '0')}</span>
-            <span class="article-card__body">
-              <strong>{topic.data.title}</strong>
-              <span>{topic.data.description}</span>
-              <span class="tag-row" aria-label="Topic tags">
-                {topic.data.tags.slice(0, 4).map((tag) => <em>{tag}</em>)}
-              </span>
-            </span>
-            <time datetime={formatDate(topic.data.date)}>{formatDate(topic.data.date)}</time>
-          </a>
-        </li>
+    <div class="stage-tabs" role="tablist" aria-label="Decentralized Systems Lab stages">
+      {stages.map((stage, index) => (
+        <button
+          type="button"
+          role="tab"
+          id={`tab-${stage.id}`}
+          class="stage-tab"
+          aria-selected={index === 0 ? 'true' : 'false'}
+          aria-controls={`panel-${stage.id}`}
+          data-stage-tab={stage.id}
+        >
+          <span>{stage.number}</span>
+          <strong>{stage.title}</strong>
+        </button>
       ))}
-    </ul>
+    </div>
+
+    <div class="stage-panels">
+      {stages.map((stage, index) => (
+        <article
+          class="stage-panel"
+          id={`panel-${stage.id}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${stage.id}`}
+          data-stage-panel={stage.id}
+          hidden={index !== 0}
+        >
+          <div class="stage-panel__header">
+            <p class="stage-panel__number">{stage.number}</p>
+            <div>
+              <h3>{stage.title}</h3>
+              <p class="stage-panel__purpose">{stage.purpose}</p>
+            </div>
+          </div>
+
+          <p class="stage-panel__summary">{stage.summary}</p>
+
+          <div class="stage-panel__grid">
+            <section aria-labelledby={`${stage.id}-activities`}>
+              <h4 id={`${stage.id}-activities`}>Current focus</h4>
+              <ul class="focus-list">
+                {stage.activities.map((activity) => <li>{activity}</li>)}
+              </ul>
+            </section>
+
+            <section aria-labelledby={`${stage.id}-artifacts`}>
+              <h4 id={`${stage.id}-artifacts`}>Expected artifacts</h4>
+              <div class="artifact-list">
+                {stage.artifacts.map((artifact) => <span>{artifact}</span>)}
+              </div>
+            </section>
+          </div>
+
+          {stage.lessons && (
+            <section class="lesson-queue" aria-labelledby="understand-lessons">
+              <div class="lesson-queue__header">
+                <h4 id="understand-lessons">Stage 1 lesson queue</h4>
+                <p>Eight compact modules for building the base mental model.</p>
+              </div>
+              <ol>
+                {stage.lessons.map((lesson, lessonIndex) => (
+                  <li>
+                    <span>{String(lessonIndex + 1).padStart(2, '0')}</span>
+                    <div>
+                      <strong>{lesson.title}</strong>
+                      <p>{lesson.purpose}</p>
+                      <small>{lesson.topics.join(' / ')}</small>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
+        </article>
+      ))}
+    </div>
   </section>
+
+  <script is:inline>
+    (() => {
+      const tabs = Array.from(document.querySelectorAll('[data-stage-tab]'));
+      const panels = Array.from(document.querySelectorAll('[data-stage-panel]'));
+      const ids = new Set(tabs.map((tab) => tab.dataset.stageTab));
+
+      const activate = (id, updateHash = true) => {
+        const activeId = ids.has(id) ? id : 'understand';
+        tabs.forEach((tab) => {
+          const selected = tab.dataset.stageTab === activeId;
+          tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+        });
+        panels.forEach((panel) => {
+          panel.hidden = panel.dataset.stagePanel !== activeId;
+        });
+        if (updateHash && location.hash !== `#${activeId}`) {
+          history.replaceState(null, '', `#${activeId}`);
+        }
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener('click', () => activate(tab.dataset.stageTab));
+      });
+
+      window.addEventListener('hashchange', () => activate(location.hash.slice(1), false));
+
+      if (ids.has(location.hash.slice(1))) {
+        activate(location.hash.slice(1), false);
+      }
+    })();
+  </script>
 </BaseLayout>

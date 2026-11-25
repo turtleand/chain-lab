@@ -1,8 +1,18 @@
 ---
 import '../styles/global.css';
 
-const { title = 'Chain Lab', description = 'Blockchain exploration lab by Turtleand' } = Astro.props;
-const pageTitle = title === 'Chain Lab' ? title : `${title} | Chain Lab`;
+const {
+  title = 'Decentralized Systems Lab',
+  description = 'Blockchain systems literacy, protocol trade-offs, custody, security, and digital agency from Turtleand.',
+  ogType = 'website',
+  image = '/social-card.png',
+} = Astro.props;
+const pageTitle = title === 'Decentralized Systems Lab'
+  ? 'Decentralized Systems Lab | Turtleand'
+  : `${title} | Decentralized Systems Lab`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(image, Astro.site);
+const rssURL = new URL('/rss.xml', Astro.site);
 ---
 <!doctype html>
 <html lang="en" data-theme="light">
@@ -11,7 +21,21 @@ const pageTitle = title === 'Chain Lab' ? title : `${title} | Chain Lab`;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <link rel="alternate" type="application/rss+xml" title="Turtleand Chain Lab RSS" href="/rss.xml" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Turtleand Decentralized Systems Lab" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={socialImageURL} />
+    <meta property="og:image:alt" content="Turtleand Decentralized Systems Lab" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageURL} />
+    <meta name="twitter:image:alt" content="Turtleand Decentralized Systems Lab" />
+    <link rel="alternate" type="application/rss+xml" title="Turtleand Decentralized Systems Lab RSS" href={rssURL} />
     <script src="/scripts/theme.js" is:inline></script>
   </head>
   <body>
@@ -23,7 +47,8 @@ const pageTitle = title === 'Chain Lab' ? title : `${title} | Chain Lab`;
         </a>
         <div class="header-actions">
           <nav aria-label="Primary navigation">
-            <a href="/#blog">Blog</a>
+            <a href="/#compass">Compass</a>
+            <a href="/blog/">Blog</a>
             <a href="https://turtleand.com">Turtleand</a>
           </nav>
           <button class="theme-toggle" data-theme-toggle type="button" aria-label="Toggle theme">

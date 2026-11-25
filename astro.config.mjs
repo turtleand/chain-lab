@@ -3,7 +3,7 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://chain.turtleand.com',
+  site: 'https://decentralized.turtleand.com',
   integrations: [mdx(), sitemap()],
   markdown: {
     smartypants: false

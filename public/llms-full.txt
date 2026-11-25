@@ -1,0 +1,43 @@
+# Turtleand Decentralized Systems Lab
+
+Canonical: https://decentralized.turtleand.com/
+
+The Decentralized Systems Lab is Turtleand's progressive path for understanding blockchain technology from first principles. It focuses on protocols, incentives, custody, security, wallets, contracts, governance, and trade-offs. The surface teaches durable systems literacy rather than price commentary, token promotion, or market timing.
+
+## Learning path
+
+- Foundations: Understand ledgers, consensus, assets, identity, custody, contracts, and governance.
+- Architectures: Compare major decentralized systems and the trade-offs they make.
+- Experiments: Build small, testnet-first artifacts that make the concepts concrete.
+- Agents: Explore how AI agents can interact with decentralized infrastructure under human review.
+
+Main route: https://decentralized.turtleand.com/
+
+## Article index
+
+### Distribution Without One Central Algorithm
+
+A systems explainer on how Mastodon content travels through followers, boosts, hashtags, federation, visibility settings, and moderation instead of one global ranking algorithm.
+
+URL: https://decentralized.turtleand.com/topics/distribution-without-one-central-algorithm/
+
+### Bitcoin Is Heavy Because It Bundles Trust
+
+A four-layer explanation of why blockchains bundle many trust problems together, while newer tools split trust into smaller specialized systems.
+
+URL: https://decentralized.turtleand.com/topics/bitcoin-blockchain-trust-unbundling/
+
+### Swapping Legacy sUSD on Optimism
+
+A practical account of handling legacy Synthetix sUSD tokens on Optimism, including failed swaps, a smart-account workaround, and the resulting custody lessons.
+
+URL: https://decentralized.turtleand.com/topics/swapping-legacy-susd-optimism/
+
+## Discovery
+
+- Article listing: https://decentralized.turtleand.com/blog/
+- RSS: https://decentralized.turtleand.com/rss.xml
+- Sitemap: https://decentralized.turtleand.com/sitemap-index.xml
+- Portal: https://turtleand.com/
+
+This site provides educational systems analysis, not financial advice.
